@@ -34,7 +34,7 @@ test: bootstrap
 clean:
 	$(XCODEBUILD) clean $(BUILD_FLAGS) $(XCPRETTY)
 
-dependencies: submodules configs secrets opentok
+dependencies: submodules ksapi-submodules configs secrets opentok
 
 bootstrap: hooks dependencies
 	brew update || brew update
@@ -45,6 +45,9 @@ bootstrap: hooks dependencies
 submodules:
 	git submodule sync --recursive || true
 	git submodule update --init --recursive || true
+
+ksapi-submodules:
+	cd Frameworks/ios-ksapi; git submodule sync --recursive || true; git submodule update --init --recursive || true;
 
 configs = $(basename $(wildcard Kickstarter-iOS/Configs/*.example))
 $(configs):
